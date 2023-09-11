@@ -19,7 +19,7 @@ func NewHandlers(s storage.Storage) Handlers {
 	}
 }
 
-func (h *Handlers) CreateUrl(w http.ResponseWriter, r *http.Request) {
+func (h *Handlers) CreateURL(w http.ResponseWriter, r *http.Request) {
 	body, err := io.ReadAll(r.Body)
 	//server will close this body
 	// we close bopdy manually only in response after client.Do
@@ -42,7 +42,7 @@ func (h *Handlers) CreateUrl(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Context-Type", "text/plain")
 }
 
-func (h *Handlers) GetUrl(w http.ResponseWriter, r *http.Request) {
+func (h *Handlers) GetURL(w http.ResponseWriter, r *http.Request) {
 	ctx := chi.RouteContext(r.Context())
 	id := ctx.URLParam("id")
 	if len(id) == 0 {

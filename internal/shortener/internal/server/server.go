@@ -24,8 +24,8 @@ func NewServer(addr string) Server {
 	handlers := handlers.NewHandlers(storage)
 
 	server.router.Use(middleware.Logger)
-	server.router.Post("/", handlers.CreateUrl)
-	server.router.Get("/{id}", handlers.GetUrl)
+	server.router.Post("/", handlers.CreateURL)
+	server.router.Get("/{id}", handlers.GetURL)
 
 	return server
 }
