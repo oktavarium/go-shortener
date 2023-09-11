@@ -26,10 +26,9 @@ func Run() error {
 		shortName := base64.StdEncoding.EncodeToString(body)
 		storage[shortName] = string(body)
 		shortName = "http://localhost:8080/" + base64.StdEncoding.EncodeToString(body)
-		w.Write([]byte(shortName))
 		w.WriteHeader(http.StatusCreated)
+		w.Write([]byte(shortName))
 		w.Header().Set("Context-Type", "text/plain")
-		fmt.Println(storage)
 	})
 
 	router.Get("/{id}", func(w http.ResponseWriter, r *http.Request) {
