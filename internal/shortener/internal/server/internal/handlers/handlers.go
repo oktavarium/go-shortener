@@ -21,7 +21,9 @@ func NewHandlers(s storage.Storage) Handlers {
 
 func (h *Handlers) CreateUrl(w http.ResponseWriter, r *http.Request) {
 	body, err := io.ReadAll(r.Body)
-	defer r.Body.Close()
+	//server will close this body
+	// we close bopdy manually only in response after client.Do
+	//defer r.Body.Close()
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
