@@ -56,5 +56,4 @@ func (h *Handlers) GetUrl(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Location", v)
 	w.WriteHeader(http.StatusTemporaryRedirect)
-
 }
