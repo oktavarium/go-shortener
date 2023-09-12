@@ -6,7 +6,10 @@ import (
 )
 
 func Run() error {
-	cfg := config.LoadConfig()
+	cfg, err := config.LoadConfig()
+	if err != nil {
+		return err
+	}
 	s := server.NewServer(cfg.Addr, cfg.BaseAddr)
 	return s.ListenAndServe()
 }
