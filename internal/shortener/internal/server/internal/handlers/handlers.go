@@ -10,12 +10,14 @@ import (
 )
 
 type Handlers struct {
-	storage storage.Storage
+	storage  storage.Storage
+	baseAddr string
 }
 
-func NewHandlers(s storage.Storage) Handlers {
+func NewHandlers(s storage.Storage, baseAddr string) Handlers {
 	return Handlers{
-		storage: s,
+		storage:  s,
+		baseAddr: baseAddr,
 	}
 }
 
@@ -36,7 +38,7 @@ func (h *Handlers) CreateUrl(w http.ResponseWriter, r *http.Request) {
 
 	shortName := base64.StdEncoding.EncodeToString(body)
 	h.storage.Save(shortName, string(body))
-	shortName = "http://localhost:8080/" + base64.StdEncoding.EncodeToString(body)
+	shortName = h.baseAddr + base64.StdEncoding.EncodeToString(body)
 	w.WriteHeader(http.StatusCreated)
 	w.Write([]byte(shortName))
 	w.Header().Set("Context-Type", "text/plain")

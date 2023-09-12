@@ -11,7 +11,7 @@ import (
 const addr string = "http://localhost:8080/"
 
 func TestServer(t *testing.T) {
-	server := NewServer(addr)
+	server := NewServer(addr, addr)
 	testServer := httptest.NewServer(server.router)
 	defer testServer.Close()
 	tests := []struct {

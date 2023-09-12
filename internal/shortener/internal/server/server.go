@@ -14,14 +14,14 @@ type Server struct {
 	addr   string
 }
 
-func NewServer(addr string) Server {
+func NewServer(addr, baseAddr string) Server {
 	server := Server{
 		router: chi.NewRouter(),
 		addr:   addr,
 	}
 
 	storage := storage.NewStorage()
-	handlers := handlers.NewHandlers(storage)
+	handlers := handlers.NewHandlers(storage, baseAddr)
 
 	server.router.Use(middleware.Logger)
 	server.router.Post("/", handlers.CreateUrl)
