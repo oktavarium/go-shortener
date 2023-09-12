@@ -2,12 +2,14 @@ package config
 
 import (
 	"flag"
+	"fmt"
 	"os"
 	"strings"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 const (
@@ -61,6 +63,15 @@ func Test_LoadConfig(t *testing.T) {
 			},
 			wantErr: false,
 		},
+		{
+			name: "too many args",
+			args: "cmd -a ya.ru -b go.go asdf badarg",
+			want: Config{
+				Addr:     "ya.ru",
+				BaseAddr: "go.go/",
+			},
+			wantErr: true,
+		},
 	}
 
 	for _, test := range tests {
@@ -71,11 +82,12 @@ func Test_LoadConfig(t *testing.T) {
 			if !test.wantErr {
 				assert.NoError(t, err)
 			} else {
-				assert.Error(t, err)
+				require.Error(t, err)
 			}
+			fmt.Println(test.want, config)
 			diff := cmp.Diff(test.want, config)
 			assert.Equal(t, "", diff)
+
 		})
 	}
-
 }

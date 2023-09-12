@@ -22,12 +22,13 @@ func LoadConfig() (Config, error) {
 		return cfg, fmt.Errorf("error on reading env parameters: %w", err)
 	}
 
+	if cfg.BaseAddr[len(cfg.BaseAddr)-1] != '/' {
+		cfg.BaseAddr += "/"
+	}
+
 	if len(flag.Args()) > 0 {
 		return cfg, fmt.Errorf("too many flags in bash")
 	}
 
-	if cfg.BaseAddr[len(cfg.BaseAddr)-1] != '/' {
-		cfg.BaseAddr += "/"
-	}
 	return cfg, nil
 }
