@@ -30,6 +30,7 @@ func NewServer(addr, baseAddr string, logLevel string) (Server, error) {
 
 	server.router.Use(logger.LogMiddleware)
 	server.router.Post("/", handlers.CreateURL)
+	server.router.Post("/api/shorten", handlers.GetJSONURL)
 	server.router.Get("/{id}", handlers.GetURL)
 
 	return server, err
