@@ -40,7 +40,7 @@ func (h *Handlers) CreateURL(w http.ResponseWriter, r *http.Request) {
 
 	shortName := base64.StdEncoding.EncodeToString(body)
 	h.storage.Save(shortName, string(body))
-	shortName = h.baseAddr + base64.StdEncoding.EncodeToString(body)
+	shortName += h.baseAddr
 	w.WriteHeader(http.StatusCreated)
 	w.Write([]byte(shortName))
 	w.Header().Set("Context-Type", "text/plain")
@@ -73,17 +73,17 @@ func (h *Handlers) GetJSONURL(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var outcomingData models.OutcomingData
-	v, ok := h.storage.Get(incomingData.URL)
-	if !ok {
-		w.WriteHeader(http.StatusBadRequest)
-		return
-	}
-	outcomingData.Result = v
+
+	shortName := base64.StdEncoding.EncodeToString([]byte(incomingData.URL))
+	h.storage.Save(shortName, incomingData.URL)
+	shortName += h.baseAddr
+
+	outcomingData.Result = shortName
 	encoder := json.NewEncoder(w)
 	err = encoder.Encode(&outcomingData)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	w.WriteHeader(http.StatusTemporaryRedirect)
+	w.WriteHeader(http.StatusCreated)
 }
