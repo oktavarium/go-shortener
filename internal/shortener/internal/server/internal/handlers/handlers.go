@@ -2,10 +2,12 @@ package handlers
 
 import (
 	"encoding/base64"
+	"encoding/json"
 	"io"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/oktavarium/go-shortener/internal/shortener/internal/server/internal/models"
 	"github.com/oktavarium/go-shortener/internal/shortener/internal/server/internal/storage"
 )
 
@@ -58,4 +60,28 @@ func (h *Handlers) GetURL(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Location", v)
 	w.WriteHeader(http.StatusTemporaryRedirect)
+}
+
+func (h *Handlers) GetJSONURL(w http.ResponseWriter, r *http.Request) {
+	var incomingData models.IncomingData
+	decoder := json.NewDecoder(r.Body)
+	err := decoder.Decode(&incomingData)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	var outcomingData models.OutcomingData
+	v, ok := h.storage.Get(incomingData.URL)
+	if !ok {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	outcomingData.Result = v
+	encoder := json.NewEncoder(w)
+	err = encoder.Encode(&outcomingData)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 }
