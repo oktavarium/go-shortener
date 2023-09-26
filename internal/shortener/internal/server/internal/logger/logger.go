@@ -30,7 +30,7 @@ func (r *loggedResponse) Write(p []byte) (int, error) {
 }
 
 func InitLogger(level string) error {
-	log.SetFormatter(&log.JSONFormatter{})
+	// log.SetFormatter(&log.JSONFormatter{})
 	logLevel, err := log.ParseLevel(level)
 	if err != nil {
 		return fmt.Errorf("failed on parsing log level: %w", err)

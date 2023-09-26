@@ -33,6 +33,7 @@ func Test_LoadConfig(t *testing.T) {
 			want: Config{
 				Addr:     "localhost:8080",
 				BaseAddr: "http://localhost:8080/",
+				LogLevel: "info",
 			},
 			wantErr: false,
 		},
@@ -42,6 +43,7 @@ func Test_LoadConfig(t *testing.T) {
 			want: Config{
 				Addr:     "ya.ru",
 				BaseAddr: "http://localhost:8080/",
+				LogLevel: "info",
 			},
 			wantErr: false,
 		},
@@ -51,6 +53,7 @@ func Test_LoadConfig(t *testing.T) {
 			want: Config{
 				Addr:     "localhost:8080",
 				BaseAddr: "ya.ru/",
+				LogLevel: "info",
 			},
 			wantErr: false,
 		},
@@ -60,6 +63,7 @@ func Test_LoadConfig(t *testing.T) {
 			want: Config{
 				Addr:     "ya.ru",
 				BaseAddr: "go.go/",
+				LogLevel: "info",
 			},
 			wantErr: false,
 		},
@@ -69,6 +73,7 @@ func Test_LoadConfig(t *testing.T) {
 			want: Config{
 				Addr:     "ya.ru",
 				BaseAddr: "go.go/",
+				LogLevel: "info",
 			},
 			wantErr: true,
 		},
