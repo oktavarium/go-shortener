@@ -40,7 +40,7 @@ func (h *Handlers) CreateURL(w http.ResponseWriter, r *http.Request) {
 
 	shortName := base64.StdEncoding.EncodeToString(body)
 	h.storage.Save(shortName, string(body))
-	shortName += h.baseAddr
+	shortName = h.baseAddr + shortName
 	w.WriteHeader(http.StatusCreated)
 	w.Write([]byte(shortName))
 	w.Header().Set("Context-Type", "text/plain")
@@ -76,7 +76,7 @@ func (h *Handlers) GetJSONURL(w http.ResponseWriter, r *http.Request) {
 
 	shortName := base64.StdEncoding.EncodeToString([]byte(incomingData.URL))
 	h.storage.Save(shortName, incomingData.URL)
-	shortName += h.baseAddr
+	shortName = h.baseAddr + shortName
 
 	outcomingData.Result = shortName
 	encoder := json.NewEncoder(w)
