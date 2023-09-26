@@ -63,6 +63,7 @@ func (h *Handlers) GetURL(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handlers) GetJSONURL(w http.ResponseWriter, r *http.Request) {
+	w.Header().Add("Content-Type", "application/json")
 	var incomingData models.IncomingData
 	decoder := json.NewDecoder(r.Body)
 	err := decoder.Decode(&incomingData)
