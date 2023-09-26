@@ -10,12 +10,14 @@ import (
 type Config struct {
 	Addr     string `env:"SERVER_ADDRESS"`
 	BaseAddr string `env:"BASE_URL"`
+	LogLevel string `env:"LOG_LEVEL"`
 }
 
 func LoadConfig() (Config, error) {
 	var cfg Config
 	flag.StringVar(&cfg.Addr, "a", "localhost:8080", "http-server address and port")
 	flag.StringVar(&cfg.BaseAddr, "b", "http://localhost:8080/", "base redirect address")
+	flag.StringVar(&cfg.LogLevel, "l", "info", "default log level")
 	flag.Parse()
 
 	if err := env.Parse(&cfg); err != nil {
