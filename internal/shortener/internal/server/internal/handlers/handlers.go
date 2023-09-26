@@ -78,6 +78,7 @@ func (h *Handlers) GetJSONURL(w http.ResponseWriter, r *http.Request) {
 	h.storage.Save(shortName, incomingData.URL)
 	shortName = h.baseAddr + shortName
 
+	w.WriteHeader(http.StatusCreated)
 	outcomingData.Result = shortName
 	encoder := json.NewEncoder(w)
 	err = encoder.Encode(&outcomingData)
@@ -85,5 +86,4 @@ func (h *Handlers) GetJSONURL(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
-	w.WriteHeader(http.StatusCreated)
 }
