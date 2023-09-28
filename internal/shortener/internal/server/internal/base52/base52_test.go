@@ -7,7 +7,7 @@ import (
 )
 
 func Test_encode(t *testing.T) {
-	input := []byte("Privet")
+	input := []byte("Privet!")
 	output := encode(input)
 	assert.Equal(t, "test", string(output))
 }
